@@ -22,8 +22,8 @@ import {
 import { app } from "../../firebase.config";
 import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/action";
-import Toast from "../Toast/Toast";
 import logo from "../../assets/img/logo.png";
+import {toast } from 'react-toastify';
 
 const Header = () => {
   const [cart, setCart] = React.useState(false);
@@ -32,11 +32,6 @@ const Header = () => {
   const firebaseAuth = getAuth(app);
   const provide = new GoogleAuthProvider();
   const [{ user }, dispatch] = useStateValue();
-  const [toast, setToast] = useState(false);
-  const [toastDetail, setToastDetail] = useState({
-    severity: "success",
-    toastMsg: "dg",
-  });
   const navigate = useNavigate();
 
   const handleMenuClick = (event) => {
@@ -67,11 +62,7 @@ const Header = () => {
       localStorage.setItem("user", JSON.stringify(providerData[0]));
     } catch (err) {
       console.log("error", err.code);
-      setToast(true);
-      setToastDetail({
-        severity: "error",
-        toastMsg: err.message,
-      });
+      toast.error(err.message)
     }
   };
 
@@ -82,18 +73,10 @@ const Header = () => {
       dispatch({ type: actionType.SET_USER, user: null });
       navigate("/");
       handleMenuClose();
-      setToast(true);
-      setToastDetail({
-        severity: "success",
-        toastMsg: "You are Logout successfully",
-      });
+      toast.success("You are Logout successfully")
     } catch (err) {
       console.log("error", err.code);
-      setToast(true);
-      setToastDetail({
-        severity: "error",
-        toastMsg: err.message,
-      });
+      toast.error(err.message)
     }
   };
 
@@ -179,7 +162,6 @@ const Header = () => {
       <Drawer anchor={"right"} open={cart} onClose={toggleCart(false)}>
         <Cart toggleCart={toggleCart} />
       </Drawer>
-      <Toast open={toast} setopen={setToast} {...toastDetail} />
     </>
   );
 };

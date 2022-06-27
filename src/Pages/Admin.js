@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import { Container } from "@mui/system";
+import AddItem from "../components/Admin/AddItem/AddItem";
 
 const Admin = () => {
   useEffect(() => {
@@ -8,7 +10,9 @@ const Admin = () => {
       firebase_screen: "Admin",
     });
   }, []);
-  return <div>Admin</div>;
+  return <Container>
+    <AddItem/>
+  </Container>;
 };
 
 export default Admin;
