@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/restaurant/static/css/main.18b4b21a.css",
+    "main.js": "/restaurant/static/js/main.2923b406.js",
+    "static/js/787.aab8bd84.chunk.js": "/restaurant/static/js/787.aab8bd84.chunk.js",
+    "static/media/logo.png": "/restaurant/static/media/logo.0f99324454e3c3ccba98.png",
+    "static/media/heroBg.png": "/restaurant/static/media/heroBg.c43c4862422e70d88698.png",
+    "static/media/delivery.png": "/restaurant/static/media/delivery.bf9130a0962fbe091abc.png",
+    "index.html": "/restaurant/index.html",
+    "main.18b4b21a.css.map": "/restaurant/static/css/main.18b4b21a.css.map",
+    "main.2923b406.js.map": "/restaurant/static/js/main.2923b406.js.map",
+    "787.aab8bd84.chunk.js.map": "/restaurant/static/js/787.aab8bd84.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.18b4b21a.css",
+    "static/js/main.2923b406.js"
+  ]
+}
