@@ -11,6 +11,7 @@ import {
   InputAdornment,
   Input,
   Stack,
+  colors,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import SaveIcon from "@mui/icons-material/Save";
@@ -43,7 +44,7 @@ const AddItem = (props) => {
   const [imageFile, setImageFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [imageProgress, setImageProgress] = useState(0);
-  console.log("rerender");
+
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -61,8 +62,8 @@ const AddItem = (props) => {
   const handleSave = (e) => {
     setIsUploading(true);
     e.preventDefault();
-    console.log("values", values, inputRef.current);
-    const storageRef = ref(storage, `Images/${Date.now()}-${imageFile.name}`);
+    const id = Date.now();
+    const storageRef = ref(storage, `Images/${id}-${imageFile.name}`);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
     uploadTask.on(
       "state_changed",
@@ -79,21 +80,42 @@ const AddItem = (props) => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((imageURL) => {
           toast.success("Image added successfully");
-          const data = { ...values, imageURL, qty: 1, id: `${Date.now()}` };
+          const data = { ...values, imageURL, qty: 1, id: `${id}` };
           // console.log(data)
-          setDoc(doc(firestore, "foodItems", `${Date.now()}`), data, {
+          setDoc(doc(firestore, "foodItems", `${id}`), data, {
             merge: true,
-          }).then(() => {
-            toast.success("Data added successfully");
-            setIsUploading(false);
-          });
+          })
+            .then(() => {
+              toast.success("Data added successfully");
+              reset();
+            })
+            .catch((error) => {
+              console.log("error on Add", error);
+              toast.error(
+                "error While Adding the Data, try again after sometime"
+              );
+            })
+            .finally(() => {
+              setIsUploading(false);
+            });
         });
       }
     );
   };
 
-  const handleDeleteImg = (e) => {
-    e.preventDefault();
+  const reset = () => {
+    setValues({
+      title: "",
+      category: "",
+      price: "",
+      calories: "",
+      description: "",
+    });
+    setImageProgress(0);
+    handleDeleteImg();
+  };
+
+  const handleDeleteImg = () => {
     setImgSrc("");
     setImageFile(null);
     inputRef.current.value = "";
@@ -176,6 +198,7 @@ const AddItem = (props) => {
                 alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "column",
+                color: "rgba(0, 0, 0, 0.54)",
               }}
             >
               {imgSrc ? (
@@ -203,11 +226,11 @@ const AddItem = (props) => {
           </Card>
           <Stack direction="row" spacing={2} sx={margin}>
             <FormControl fullWidth variant="standard">
-              <InputLabel htmlFor="standard-adornment-price">
+              <InputLabel htmlFor="standard-adornment-calories">
                 Calories
               </InputLabel>
               <Input
-                id="standard-adornment-price"
+                id="standard-adornment-calories"
                 value={values.calories}
                 onChange={handleChange}
                 startAdornment={

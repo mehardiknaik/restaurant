@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,7 +23,9 @@ import { app } from "../../firebase.config";
 import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/action";
 import logo from "../../assets/img/logo.png";
-import {toast } from 'react-toastify';
+import avatar from "../../assets/img/avatar.png";
+import { toast } from "react-toastify";
+import getItems from "../../util/firebaseFunction";
 
 const Header = () => {
   const [cart, setCart] = React.useState(false);
@@ -62,7 +64,7 @@ const Header = () => {
       localStorage.setItem("user", JSON.stringify(providerData[0]));
     } catch (err) {
       console.log("error", err.code);
-      toast.error(err.message)
+      toast.error(err.message);
     }
   };
 
@@ -73,12 +75,18 @@ const Header = () => {
       dispatch({ type: actionType.SET_USER, user: null });
       navigate("/");
       handleMenuClose();
-      toast.success("You are Logout successfully")
+      toast.success("You are Logout successfully");
     } catch (err) {
       console.log("error", err.code);
-      toast.error(err.message)
+      toast.error(err.message);
     }
   };
+
+  useEffect(() => {
+    getItems().then((items) => {
+      dispatch({ type: actionType.SET_ITEMS, items });
+    });
+  }, []);
 
   return (
     <>
@@ -95,7 +103,7 @@ const Header = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {user ? `Hi... ${user?.displayName.split(" ")[0]}` : "Restaurant"}
             </Typography>
-            <Badge badgeContent={4} color="error">
+            <Badge badgeContent={4} color="secondary">
               <ShoppingBasketIcon
                 component={motion.svg}
                 whileTap={{ scale: 0.7 }}
@@ -152,9 +160,13 @@ const Header = () => {
                 </Menu>
               </>
             ) : (
-              <Button color="inherit" onClick={login}>
-                Login
-              </Button>
+              <Box
+                height="36px"
+                src={avatar}
+                onClick={login}
+                component={motion.img}
+                whileTap={{ scale: 0.7 }}
+              ></Box>
             )}
           </Toolbar>
         </AppBar>
