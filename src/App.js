@@ -1,5 +1,4 @@
-import "./App.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Home from "./Pages/Home";
@@ -14,7 +13,6 @@ const theme = createTheme({
   palette: {
     primary: {
       main: colors.orange[800],
-
     },
     secondary: {
       main: colors.orange[100],
@@ -23,16 +21,15 @@ const theme = createTheme({
 });
 
 const App = () => {
-
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
       <ThemeProvider theme={theme}>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="admin" element={<Admin />} />
-      </Routes>
-      <ToastContainer hideProgressBar theme="colored" />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="admin" element={<Admin />} />
+        </Routes>
+        <ToastContainer hideProgressBar theme="colored" />
       </ThemeProvider>
     </StateProvider>
   );

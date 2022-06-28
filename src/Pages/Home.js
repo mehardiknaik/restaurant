@@ -1,10 +1,7 @@
-import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import Hero from "../components/Home/Hero";
-import { Container, Grid, Paper } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import Item from "../components/Common/Item";
+import { Container} from "@mui/material";
 const Home = () => {
   useEffect(() => {
     const analytics = getAnalytics();

@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  TextField,
   Box,
   FormControl,
   InputLabel,
@@ -11,7 +10,6 @@ import {
   InputAdornment,
   Input,
   Stack,
-  colors,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import SaveIcon from "@mui/icons-material/Save";
@@ -28,6 +26,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import DescriptionIcon from "@mui/icons-material/Description";
 import MedicationLiquidIcon from "@mui/icons-material/MedicationLiquid";
+import imageCompression from "browser-image-compression";
 
 const AddItem = (props) => {
   const [values, setValues] = useState(
@@ -51,11 +50,12 @@ const AddItem = (props) => {
     setValues((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageSelected = (e) => {
+  const handleImageSelected = async (e) => {
     if (e.target.files && e.target.files[0]) {
-      const image = e.target.files[0];
-      setImageFile(image);
-      setImgSrc(URL.createObjectURL(image));
+      const file = e.target.files[0];
+      const output = await imageCompression(file, options);
+      setImageFile(output);
+      setImgSrc(URL.createObjectURL(output));
     }
   };
 
@@ -79,7 +79,7 @@ const AddItem = (props) => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((imageURL) => {
-          toast.success("Image added successfully");
+          // toast.success("Image added successfully");
           const data = { ...values, imageURL, qty: 1, id: `${id}` };
           // console.log(data)
           setDoc(doc(firestore, "foodItems", `${id}`), data, {
@@ -313,4 +313,10 @@ const AddItem = (props) => {
   );
 };
 const margin = { my: 1.6 };
+const options = {
+  // maxSizeMB: this.state.maxSizeMB,
+  maxWidthOrHeight: 500,
+  // useWebWorker,
+  // onProgress: p => this.onProgress(p, useWebWorker)
+};
 export default AddItem;
