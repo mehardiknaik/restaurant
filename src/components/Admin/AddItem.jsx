@@ -18,10 +18,10 @@ import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
-import { category } from "../../../data/data";
+import { category } from "../../data/data";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { firestore, storage } from "../../../firebase.config";
-import ProgressBar from "../../Common/ProgressBar";
+import { firestore, storage } from "../../firebase.config";
+import ProgressBar from "../Common/ProgressBar";
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -73,8 +73,8 @@ const AddItem = (props) => {
         setImageProgress(uploadProgress);
       },
       (error) => {
-        console.log("error on upload", error);
-        toast.error("error While Uploading the Image");
+        console.log("error on upload", error.message);
+        toast.error(error.message);
         setIsUploading(false);
       },
       () => {
@@ -91,9 +91,7 @@ const AddItem = (props) => {
             })
             .catch((error) => {
               console.log("error on Add", error);
-              toast.error(
-                "error While Adding the Data, try again after sometime"
-              );
+              toast.error(error.message);
             })
             .finally(() => {
               setIsUploading(false);

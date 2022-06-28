@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { Container } from "@mui/system";
-import AddItem from "../components/Admin/AddItem/AddItem";
+import AddItem from "../components/Admin/AddItem";
 
 const Admin = () => {
   useEffect(() => {

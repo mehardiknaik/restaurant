@@ -33,7 +33,7 @@ const Header = () => {
   const open = Boolean(menuList);
   const firebaseAuth = getAuth(app);
   const provide = new GoogleAuthProvider();
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user: users }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
   const handleMenuClick = (event) => {
@@ -55,19 +55,19 @@ const Header = () => {
   const login = async () => {
     try {
       const {
-        user: { refreshToken, providerData },
+        user,
       } = await signInWithPopup(firebaseAuth, provide);
+      console.log("user", user);
       dispatch({
         type: actionType.SET_USER,
-        user: providerData[0],
+        user: user,
       });
-      localStorage.setItem("user", JSON.stringify(providerData[0]));
+      localStorage.setItem("user", JSON.stringify(user));
     } catch (err) {
       console.log("error", err.code);
       toast.error(err.message);
     }
   };
-
   const logout = async () => {
     try {
       await signOut(firebaseAuth);
@@ -101,7 +101,9 @@ const Header = () => {
               <Box component="img" src={logo} sx={{ height: 50 }}></Box>
             </Link>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {user ? `Hi... ${user?.displayName.split(" ")[0]}` : "Restaurant"}
+              {users
+                ? `Hi... ${users?.displayName.split(" ")[0]}`
+                : "Restaurant"}
             </Typography>
             <Badge badgeContent={4} color="secondary">
               <ShoppingBasketIcon
@@ -111,14 +113,14 @@ const Header = () => {
                 fontSize="large"
               />
             </Badge>
-            {user ? (
+            {users ? (
               <>
                 <Avatar
                   component={motion.div}
                   whileTap={{ scale: 0.7 }}
                   sx={{ width: 36, height: 36 }}
-                  alt={user?.displayName}
-                  src={user?.photoURL}
+                  alt={users?.displayName}
+                  src={users?.photoURL}
                   aria-controls={open ? "basic-menu" : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
@@ -143,7 +145,7 @@ const Header = () => {
                     to="/admin"
                     onClick={handleMenuClose}
                   >
-                    {user?.displayName}
+                    {users?.displayName}
                   </MenuItem>
                   <MenuItem
                     component={Paper}

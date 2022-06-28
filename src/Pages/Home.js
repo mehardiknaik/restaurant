@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import Hero from "../components/Home/Hero";
 import { Container} from "@mui/material";
+import Fresh from "../components/Home/Fresh";
 const Home = () => {
   useEffect(() => {
     const analytics = getAnalytics();
@@ -13,6 +14,7 @@ const Home = () => {
   return (
     <Container>
       <Hero />
+      <Fresh/>
     </Container>
   );
 };

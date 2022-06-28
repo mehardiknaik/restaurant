@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   colors,
+  duration,
   Grid,
   Paper,
   Typography,
@@ -14,17 +15,18 @@ import heroBg from "../../assets/img/heroBg.png";
 import { useStateValue } from "../../context/StateProvider";
 
 const Hero = () => {
-  const [{ items },dispatch] = useStateValue();
+  const [{ items }, dispatch] = useStateValue();
   return (
     <Grid
       container
       sx={{
         height: {
-          sm: "calc(100vh - 55px)",
+          md: "calc(100vh - 55px)",
         },
         alignItems: "center",
         rowGap: 5,
       }}
+      component="section"
     >
       {/* Left Container */}
       <Grid item xs={12} md={7}>
@@ -97,10 +99,10 @@ const Hero = () => {
           }}
         >
           {items.length > 0 &&
-            items.slice(0,4).map((item, i) => (
+            items.slice(0, 4).map((item, i) => (
               <Card
                 component={motion.div}
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: 0.9, transition: { duration: 0.1 } }}
                 key={item.id}
                 sx={{
                   bgcolor: "#ffffff4d",
@@ -109,24 +111,30 @@ const Hero = () => {
                   gridRowEnd: "span 2",
                   gridRowStart: i === 0 ? 2 : "initial",
                   borderRadius: 6,
+                  // width:'fit-content'
                 }}
               >
                 <CardContent sx={{ textAlign: "center" }}>
                   <Box
                     component="img"
-                    sx={{ height: 100, objectFit: "contain", marginTop: -8 }}
+                    sx={{
+                      height: 100,
+                      objectFit: "contain",
+                      marginTop: -8,
+                      filter: "drop-shadow(0 0 0.75rem crimson)",
+                    }}
                     src={item?.imageURL}
                     loading="lazy"
                   ></Box>
-                  <Typography variant="h5" component="div">
+                  <Typography variant="h6" component="div">
                     {item?.title}
                   </Typography>
-                  <Typography variant="subtitle1" component="div">
+                  <Typography variant="caption" component="div">
                     {item?.description}
                   </Typography>
-                  <Typography variant="subtitle2" component="div">
+                  <Typography variant="caption" component="div">
                     <Typography
-                      variant="caption"
+                      variant="subtitle2"
                       component="span"
                       color="primary"
                     >
