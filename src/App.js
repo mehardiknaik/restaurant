@@ -18,7 +18,7 @@ const theme = createTheme({
       main: colors.orange[800],
     },
     secondary: {
-      main: colors.orange[50],
+      main: '#ed143d',
     },
   },
 });
