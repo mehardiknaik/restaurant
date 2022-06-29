@@ -3,6 +3,7 @@ import { getAnalytics, logEvent } from "firebase/analytics";
 import Hero from "../components/Home/Hero";
 import { Container} from "@mui/material";
 import Fresh from "../components/Home/Fresh";
+import { category } from "../data/data";
 const Home = () => {
   useEffect(() => {
     const analytics = getAnalytics();
@@ -14,7 +15,7 @@ const Home = () => {
   return (
     <Container>
       <Hero />
-      <Fresh/>
+      <Fresh {...category[4]}/>
     </Container>
   );
 };

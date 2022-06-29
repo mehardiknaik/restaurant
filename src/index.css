@@ -28,3 +28,12 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* Swipper Style */
+
+.swiper-3d .swiper-slide-shadow-left {
+  background-image: linear-gradient(to left,rgb(172 172 172 / 50%),rgba(0,0,0,0)) !important;
+}
+.swiper-3d .swiper-slide-shadow-right {
+  background-image: linear-gradient(to right,rgb(172 172 172 / 50%),rgba(0,0,0,0)) !important;
+}
