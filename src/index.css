@@ -5,11 +5,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-  -webkit-user-select: none;  /* Chrome all / Safari all */
-  -moz-user-select: none;     /* Firefox all */
-  -ms-user-select: none;      /* IE 10+ */
-  user-select: none;          /* Likely future */  
+
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Likely future */
 }
 
 code {
@@ -30,10 +34,20 @@ input[type=number] {
 }
 
 /* Swipper Style */
+.swiper {
+  padding-top: 50px !important;
+}
 
-.swiper-3d .swiper-slide-shadow-left {
-  background-image: linear-gradient(to left,rgb(172 172 172 / 50%),rgba(0,0,0,0)) !important;
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  border-radius: 24px;
+  background-image:none !important
 }
-.swiper-3d .swiper-slide-shadow-right {
-  background-image: linear-gradient(to right,rgb(172 172 172 / 50%),rgba(0,0,0,0)) !important;
+
+/* .swiper-slide-shadow-left {
+  background-image: linear-gradient(to left, rgb(172 172 172 / 50%), rgba(0, 0, 0, 0)) !important;
 }
+
+.swiper-slide-shadow-right {
+  background-image: linear-gradient(to right, rgb(172 172 172 / 50%), rgba(0, 0, 0, 0)) !important;
+} */

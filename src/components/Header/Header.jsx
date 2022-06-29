@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Drawer from "@mui/material/Drawer";
-import { Avatar, Badge, IconButton, Paper } from "@mui/material";
+import { Avatar, Badge, Drawer, IconButton, Paper } from "@mui/material";
 import Cart from "../Cart/Cart";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import Menu from "@mui/material/Menu";
@@ -19,20 +17,12 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
-import { app, firestore } from "../../firebase.config";
+import { app } from "../../firebase.config";
 import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/action";
 import logo from "../../assets/img/logo.png";
 import avatar from "../../assets/img/avatar.png";
 import { toast } from "react-toastify";
-import getItems from "../../util/firebaseFunction";
-import {
-  collection,
-  doc,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
 
 const Header = () => {
   const [cart, setCart] = React.useState(false);
@@ -87,20 +77,9 @@ const Header = () => {
     }
   };
 
-  useEffect(() => {
-    const q = query(collection(firestore, "foodItems"), orderBy("id", "desc"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const items = querySnapshot.docs.map((doc) => doc.data());
-      dispatch({ type: actionType.SET_ITEMS, items });
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
   return (
     <>
-      <Box sx={{ flexGrow: 1, pb: "65px" }}>
+      <Box sx={{ flexGrow: 1 }}>
         <AppBar
           position="fixed"
           color="transparent"
@@ -115,29 +94,22 @@ const Header = () => {
                 ? `Hi... ${users?.displayName.split(" ")[0]}`
                 : "Restaurant"}
             </Typography>
-            <IconButton
-              aria-label="cart"
-              onClick={toggleCart(!cart)}
-            >
+            <IconButton aria-label="cart" onClick={toggleCart(!cart)}>
               <Badge badgeContent={1} color="primary">
                 <ShoppingBasketIcon fontSize="large" />
               </Badge>
             </IconButton>
             {users ? (
               <>
-                <IconButton
-                  aria-label="cart"
-                  onClick={handleMenuClick}
-                >
-                <Avatar
-                  sx={{ width: 36, height: 36 }}
-                  alt={users?.displayName}
-                  src={users?.photoURL}
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                 
-                />
+                <IconButton aria-label="cart" onClick={handleMenuClick}>
+                  <Avatar
+                    sx={{ width: 36, height: 36 }}
+                    alt={users?.displayName}
+                    src={users?.photoURL}
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                  />
                 </IconButton>
                 <Menu
                   id="basic-menu"
@@ -188,6 +160,7 @@ const Header = () => {
       <Drawer anchor={"right"} open={cart} onClose={toggleCart(false)}>
         <Cart toggleCart={toggleCart} />
       </Drawer>
+      <Toolbar sx={{ mb: 1 }} />
     </>
   );
 };

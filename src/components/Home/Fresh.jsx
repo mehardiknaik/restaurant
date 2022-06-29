@@ -1,8 +1,15 @@
-import { Box, Card, CardContent, colors, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Card,
+  CardContent,
+  colors,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import React from "react";
 
 // Import Swiper
-import { EffectCoverflow, Pagination } from "swiper";
+import { EffectCoverflow, Pagination,FreeMode } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -10,6 +17,8 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import { useStateValue } from "../../context/StateProvider";
+
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Fresh = ({ urlParamname, name }) => {
   const [{ items }, dispatch] = useStateValue();
@@ -42,9 +51,11 @@ const Fresh = ({ urlParamname, name }) => {
         effect={"coverflow"}
         grabCursor={true}
         centeredSlides={true}
+        // freeMode={true}
+        modules={[EffectCoverflow, Pagination]}
         breakpoints={{
           0: {
-            slidesPerView: 1,
+            slidesPerView: 1.5,
             spaceBetween: 20,
           },
           // when window width is >= 480px
@@ -52,17 +63,13 @@ const Fresh = ({ urlParamname, name }) => {
             slidesPerView: 2,
             spaceBetween: 20,
           },
-          // when window width is >= 640px
-          640: {
+          // when window width is >= 768px
+          768: {
             slidesPerView: 3,
             spaceBetween: 20,
           },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 20,
-          },
           1024: {
-            slidesPerView: 5,
+            slidesPerView: 4,
             spaceBetween: 20,
           },
         }}
@@ -73,27 +80,45 @@ const Fresh = ({ urlParamname, name }) => {
           modifier: 1,
           slideShadows: true,
         }}
-        pagination={true}
-        modules={[EffectCoverflow, Pagination]}
+        // pagination={true}
       >
         {data.length > 0 &&
-          data.map((e, i) => (
+          items.map((item, i) => (
             <SwiperSlide key={i}>
               <Card
                 bgcolor="primary.main"
                 sx={{
-                  bgcolor: "#ffffff4d",
-                  overflow: "visible",
-                  // backdropFilter:"blur(3px)",
-                  gridRowEnd: "span 2",
-                  gridRowStart: i === 0 ? 2 : "initial",
                   borderRadius: 6,
-                  // width:'fit-content'
+                  overflow: "visible",
+                  isolation: "isolate",
                 }}
               >
-                <CardContent sx={{ textAlign: "center" }}>
+                <Box
+                  component="img"
+                  sx={{
+                    // height: 100,
+                    width:'50%',
+                    objectFit: "contain",
+                    filter: "drop-shadow(0 0 0.75rem crimson)",
+                    position: "absolute",
+                    top: -35,
+                    zIndex: -1,
+                  }}
+                  src={item?.imageURL}
+                  loading="lazy"
+                />
+                <CardContent
+                  sx={{
+                    textAlign: "right",
+                    textShadow:
+                      "2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff",
+                  }}
+                >
+                  <IconButton aria-label="cart" color="primary">
+                    <ShoppingCartIcon />
+                  </IconButton>
                   <Typography variant="h6" component="div">
-                    {e?.title}
+                    {item?.title}
                   </Typography>
                   <Typography variant="caption" component="div">
                     dsvcds
