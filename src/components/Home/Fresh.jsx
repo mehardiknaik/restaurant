@@ -9,7 +9,7 @@ import {
 import React from "react";
 
 // Import Swiper
-import { EffectCoverflow, Pagination,FreeMode } from "swiper";
+import { EffectCoverflow, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -51,7 +51,6 @@ const Fresh = ({ urlParamname, name }) => {
         effect={"coverflow"}
         grabCursor={true}
         centeredSlides={true}
-        // freeMode={true}
         modules={[EffectCoverflow, Pagination]}
         breakpoints={{
           0: {
