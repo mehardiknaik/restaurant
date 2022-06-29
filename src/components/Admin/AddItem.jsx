@@ -10,6 +10,7 @@ import {
   InputAdornment,
   Input,
   Stack,
+  Button,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import SaveIcon from "@mui/icons-material/Save";
@@ -184,43 +185,33 @@ const AddItem = (props) => {
               justifyContent: "center",
               alignItems: "center",
               position: "relative",
+              flexDirection: "column",
             }}
             onClick={() =>
               !imgSrc && inputRef.current && inputRef.current.click()
             }
           >
-            <CardContent
-              sx={{
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "column",
-                color: "rgba(0, 0, 0, 0.54)",
-              }}
-            >
-              {imgSrc ? (
-                <>
-                  <CloseIcon
-                    sx={{
-                      cursor: "pointer",
-                      position: "absolute",
-                      top: 0,
-                      right: 0,
-                    }}
-                    onClick={handleDeleteImg}
-                  />
-                  <img src={imgSrc} alt="dfvs" height="100%" />
-                </>
-              ) : (
-                <>
-                  <CloudUploadOutlinedIcon sx={{ fontSize: 40 }} />
-                  <Typography variant="h6" component="div">
-                    Select Image
-                  </Typography>
-                </>
-              )}
-            </CardContent>
+            {imgSrc ? (
+              <>
+                <CloseIcon
+                  sx={{
+                    cursor: "pointer",
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                  }}
+                  onClick={handleDeleteImg}
+                />
+                <img src={imgSrc} alt="dfvs" height="100%" />
+              </>
+            ) : (
+              <>
+                <CloudUploadOutlinedIcon sx={{ fontSize: 40 }} />
+                <Typography variant="h6" component="div">
+                  Select Image
+                </Typography>
+              </>
+            )}
           </Card>
           <Stack direction="row" spacing={2} sx={margin}>
             <FormControl fullWidth variant="standard">
@@ -236,6 +227,12 @@ const AddItem = (props) => {
                     <MedicationLiquidIcon />
                   </InputAdornment>
                 }
+                // endAdornment={
+                //   <InputAdornment sx={{ cursor: "pointer" }}>
+                //     <MedicationLiquidIcon />
+                //   </InputAdornment>
+                // }
+                // sx={{ '.MuiInput-input':{textAlign: "center"} }}
                 name="calories"
                 type="number"
                 inputProps={{

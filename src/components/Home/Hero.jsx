@@ -13,9 +13,11 @@ import delivery from "../../assets/img/delivery.png";
 import { motion } from "framer-motion";
 import heroBg from "../../assets/img/heroBg.png";
 import { useStateValue } from "../../context/StateProvider";
+import { useTheme } from "@emotion/react";
 
 const Hero = () => {
   const [{ items }, dispatch] = useStateValue();
+  const theme = useTheme();
   return (
     <Grid
       container
@@ -31,8 +33,8 @@ const Hero = () => {
       {/* Left Container */}
       <Grid item xs={12} md={7}>
         <Box
+        bgcolor="primary.main"
           sx={{
-            bgcolor: colors.orange[50],
             width: "max-content",
             paddingBlock: 0.4,
             paddingInline: 0.9,
@@ -46,7 +48,7 @@ const Hero = () => {
           whileTap={{ scale: 0.9 }}
         >
           {" "}
-          <Typography variant="subtitle2" display="block" color="primary">
+          <Typography variant="subtitle2" display="block" color="primary.contrastText">
             Fast Delivery
           </Typography>
           <Paper
@@ -104,10 +106,11 @@ const Hero = () => {
                 component={motion.div}
                 whileTap={{ scale: 0.9, transition: { duration: 0.1 } }}
                 key={item.id}
+                bgcolor="primary.main"
                 sx={{
                   bgcolor: "#ffffff4d",
                   overflow: "visible",
-                  backdropFilter: "blur(3px)",
+                  // backdropFilter:"blur(3px)",
                   gridRowEnd: "span 2",
                   gridRowStart: i === 0 ? 2 : "initial",
                   borderRadius: 6,

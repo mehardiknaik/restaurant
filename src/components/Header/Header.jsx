@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
-import { Avatar, Badge, Paper } from "@mui/material";
+import { Avatar, Badge, IconButton, Paper } from "@mui/material";
 import Cart from "../Cart/Cart";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import Menu from "@mui/material/Menu";
@@ -19,13 +19,20 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
-import { app } from "../../firebase.config";
+import { app, firestore } from "../../firebase.config";
 import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/action";
 import logo from "../../assets/img/logo.png";
 import avatar from "../../assets/img/avatar.png";
 import { toast } from "react-toastify";
 import getItems from "../../util/firebaseFunction";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 const Header = () => {
   const [cart, setCart] = React.useState(false);
@@ -54,9 +61,7 @@ const Header = () => {
 
   const login = async () => {
     try {
-      const {
-        user,
-      } = await signInWithPopup(firebaseAuth, provide);
+      const { user } = await signInWithPopup(firebaseAuth, provide);
       console.log("user", user);
       dispatch({
         type: actionType.SET_USER,
@@ -83,9 +88,14 @@ const Header = () => {
   };
 
   useEffect(() => {
-    getItems().then((items) => {
+    const q = query(collection(firestore, "foodItems"), orderBy("id", "desc"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const items = querySnapshot.docs.map((doc) => doc.data());
       dispatch({ type: actionType.SET_ITEMS, items });
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
@@ -105,27 +115,30 @@ const Header = () => {
                 ? `Hi... ${users?.displayName.split(" ")[0]}`
                 : "Restaurant"}
             </Typography>
-            <Badge badgeContent={4} color="secondary">
-              <ShoppingBasketIcon
-                component={motion.svg}
-                whileTap={{ scale: 0.7 }}
-                onClick={toggleCart(!cart)}
-                fontSize="large"
-              />
-            </Badge>
+            <IconButton
+              aria-label="cart"
+              onClick={toggleCart(!cart)}
+            >
+              <Badge badgeContent={1} color="primary">
+                <ShoppingBasketIcon fontSize="large" />
+              </Badge>
+            </IconButton>
             {users ? (
               <>
+                <IconButton
+                  aria-label="cart"
+                  onClick={handleMenuClick}
+                >
                 <Avatar
-                  component={motion.div}
-                  whileTap={{ scale: 0.7 }}
                   sx={{ width: 36, height: 36 }}
                   alt={users?.displayName}
                   src={users?.photoURL}
                   aria-controls={open ? "basic-menu" : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
-                  onClick={handleMenuClick}
+                 
                 />
+                </IconButton>
                 <Menu
                   id="basic-menu"
                   anchorEl={menuList}
@@ -151,7 +164,6 @@ const Header = () => {
                     component={Paper}
                     sx={{
                       marginInline: 0.7,
-                      bgcolor: "#e0e0e0",
                       borderRadius: 2,
                     }}
                     elevation={0}
