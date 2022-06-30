@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/restaurant/static/css/main.ff1d7de0.css",
-    "main.js": "/restaurant/static/js/main.70eb7e45.js",
+    "main.js": "/restaurant/static/js/main.0e6ef5a1.js",
     "static/css/105.6d493773.chunk.css": "/restaurant/static/css/105.6d493773.chunk.css",
-    "static/js/105.ac72a3ff.chunk.js": "/restaurant/static/js/105.ac72a3ff.chunk.js",
+    "static/js/105.d8fce4a1.chunk.js": "/restaurant/static/js/105.d8fce4a1.chunk.js",
     "static/js/55.271b0000.chunk.js": "/restaurant/static/js/55.271b0000.chunk.js",
     "static/js/787.aab8bd84.chunk.js": "/restaurant/static/js/787.aab8bd84.chunk.js",
-    "static/js/989.5244f729.chunk.js": "/restaurant/static/js/989.5244f729.chunk.js",
+    "static/js/989.d7cf02c3.chunk.js": "/restaurant/static/js/989.d7cf02c3.chunk.js",
     "static/js/251.4e337c2b.chunk.js": "/restaurant/static/js/251.4e337c2b.chunk.js",
     "static/media/logo.png": "/restaurant/static/media/logo.0f99324454e3c3ccba98.png",
     "static/media/heroBg.png": "/restaurant/static/media/heroBg.c43c4862422e70d88698.png",
@@ -14,16 +14,16 @@
     "static/media/avatar.png": "/restaurant/static/media/avatar.68cdc4513e601d28a382.png",
     "index.html": "/restaurant/index.html",
     "main.ff1d7de0.css.map": "/restaurant/static/css/main.ff1d7de0.css.map",
-    "main.70eb7e45.js.map": "/restaurant/static/js/main.70eb7e45.js.map",
+    "main.0e6ef5a1.js.map": "/restaurant/static/js/main.0e6ef5a1.js.map",
     "105.6d493773.chunk.css.map": "/restaurant/static/css/105.6d493773.chunk.css.map",
-    "105.ac72a3ff.chunk.js.map": "/restaurant/static/js/105.ac72a3ff.chunk.js.map",
+    "105.d8fce4a1.chunk.js.map": "/restaurant/static/js/105.d8fce4a1.chunk.js.map",
     "55.271b0000.chunk.js.map": "/restaurant/static/js/55.271b0000.chunk.js.map",
     "787.aab8bd84.chunk.js.map": "/restaurant/static/js/787.aab8bd84.chunk.js.map",
-    "989.5244f729.chunk.js.map": "/restaurant/static/js/989.5244f729.chunk.js.map",
+    "989.d7cf02c3.chunk.js.map": "/restaurant/static/js/989.d7cf02c3.chunk.js.map",
     "251.4e337c2b.chunk.js.map": "/restaurant/static/js/251.4e337c2b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ff1d7de0.css",
-    "static/js/main.70eb7e45.js"
+    "static/js/main.0e6ef5a1.js"
   ]
 }
