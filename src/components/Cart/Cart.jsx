@@ -8,8 +8,17 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import CardContent from "@mui/material/CardContent";
+import { useStateValue } from "../../context/StateProvider";
+import { Button, IconButton, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { actionType } from "../../context/action";
 
 const Cart = ({ toggleCart }) => {
+  const [{ cart }, dispatch] = useStateValue();
+
+  const handleClearCart = () => {
+    dispatch({ type: actionType.CLEAR_CART, payload: [] });
+  };
   return (
     <Box
       sx={{ width: { xs: "100vw", sm: 350 } }}
@@ -17,8 +26,30 @@ const Cart = ({ toggleCart }) => {
       onKeyDown={toggleCart(false)}
     >
       <CardContent>
-        <Box sx={{ textAlign: "right" }}>
-          <CloseIcon sx={{ cursor: "pointer" }} onClick={toggleCart(false)} />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <IconButton
+            aria-label="cart"
+            color="primary"
+            variant="contained"
+            onClick={toggleCart(false)}
+          >
+            {" "}
+            <ArrowBackIcon />
+          </IconButton>
+
+          <Typography variant="subtitle1" component="div">
+            Cart
+          </Typography>
+          <Button variant="text" onClick={handleClearCart}>
+            <CloseIcon />
+            Clear Cart
+          </Button>
         </Box>
 
         <List>

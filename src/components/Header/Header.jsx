@@ -25,12 +25,12 @@ import avatar from "../../assets/img/avatar.png";
 import { toast } from "react-toastify";
 
 const Header = () => {
-  const [cart, setCart] = React.useState(false);
+  const [showCart, setShowCart] = React.useState(false);
   const [menuList, setMenuList] = React.useState(null);
   const open = Boolean(menuList);
   const firebaseAuth = getAuth(app);
   const provide = new GoogleAuthProvider();
-  const [{ user: users }, dispatch] = useStateValue();
+  const [{ user: users,cart }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
   const handleMenuClick = (event) => {
@@ -46,7 +46,7 @@ const Header = () => {
     ) {
       return;
     }
-    setCart(open);
+    setShowCart(open);
   };
 
   const login = async () => {
@@ -55,7 +55,7 @@ const Header = () => {
       console.log("user", user);
       dispatch({
         type: actionType.SET_USER,
-        user: user,
+        payload: user,
       });
       localStorage.setItem("user", JSON.stringify(user));
     } catch (err) {
@@ -67,7 +67,7 @@ const Header = () => {
     try {
       await signOut(firebaseAuth);
       localStorage.clear();
-      dispatch({ type: actionType.SET_USER, user: null });
+      dispatch({ type: actionType.SET_USER, payload: null });
       navigate("/");
       handleMenuClose();
       toast.success("You are Logout successfully");
@@ -94,8 +94,8 @@ const Header = () => {
                 ? `Hi... ${users?.displayName.split(" ")[0]}`
                 : "Restaurant"}
             </Typography>
-            <IconButton aria-label="cart" onClick={toggleCart(!cart)}>
-              <Badge badgeContent={1} color="primary">
+            <IconButton aria-label="cart" onClick={toggleCart(!showCart)}>
+              <Badge badgeContent={cart?.length} color="primary">
                 <ShoppingBasketIcon fontSize="large" />
               </Badge>
             </IconButton>
@@ -157,7 +157,7 @@ const Header = () => {
           </Toolbar>
         </AppBar>
       </Box>
-      <Drawer anchor={"right"} open={cart} onClose={toggleCart(false)}>
+      <Drawer anchor={"right"} open={showCart} onClose={toggleCart(false)}>
         <Cart toggleCart={toggleCart} />
       </Drawer>
       <Toolbar sx={{ mb: 1 }} />

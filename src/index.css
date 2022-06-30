@@ -36,6 +36,7 @@ input[type=number] {
 /* Swipper Style */
 .swiper {
   padding-top: 50px !important;
+  padding-bottom: 30px !important;
 }
 
 .swiper-slide-shadow-left,

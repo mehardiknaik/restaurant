@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
-import Home from "./Pages/Home";
 import { useStateValue } from "./context/StateProvider";
-import Admin from "./Pages/Admin";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { colors, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
@@ -11,41 +9,60 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { firestore } from "./firebase.config";
 import { actionType } from "./context/action";
 
-const theme = createTheme({
-  palette: {
-    // mode: "dark",
-    primary: {
-      main: colors.orange[800],
-    },
-    secondary: {
-      main: '#ed143d',
-    },
-  },
-});
+const Home = lazy(() => import("./Pages/Home"));
+const Admin = lazy(() => import("./Pages/Admin"));
 
 const App = () => {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ cart }, dispatch] = useStateValue();
+
   useEffect(() => {
     const q = query(collection(firestore, "foodItems"), orderBy("id", "desc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const items = querySnapshot.docs.map((doc) => doc.data());
-      dispatch({ type: actionType.SET_ITEMS, items });
+      dispatch({ type: actionType.SET_ITEMS, payload:items });
     });
     return () => {
       unsubscribe();
     };
   }, []);
+
+useEffect(()=>{
+  localStorage.setItem("cart",JSON.stringify(cart))
+},[cart])
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={lightTheme}>
       <CssBaseline />
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="admin" element={<Admin />} />
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="admin" element={<Admin />} />
+        </Routes>
+      </Suspense>
       <ToastContainer hideProgressBar theme="colored" />
     </ThemeProvider>
   );
 };
-
+const lightTheme = createTheme({
+  palette: {
+    primary: {
+      main: colors.orange[800],
+    },
+    secondary: {
+      main: colors.pink["A400"],
+    },
+  },
+});
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: colors.orange[800],
+    },
+    secondary: {
+      main: colors.pink["A100"],
+    },
+  },
+});
 export default App;

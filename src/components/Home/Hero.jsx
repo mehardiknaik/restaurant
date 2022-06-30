@@ -33,7 +33,7 @@ const Hero = () => {
       {/* Left Container */}
       <Grid item xs={12} md={7}>
         <Box
-        bgcolor="primary.main"
+          bgcolor="primary.main"
           sx={{
             width: "max-content",
             paddingBlock: 0.4,
@@ -48,7 +48,11 @@ const Hero = () => {
           whileTap={{ scale: 0.9 }}
         >
           {" "}
-          <Typography variant="subtitle2" display="block" color="primary.contrastText">
+          <Typography
+            variant="subtitle2"
+            display="block"
+            color="primary.contrastText"
+          >
             Fast Delivery
           </Typography>
           <Paper

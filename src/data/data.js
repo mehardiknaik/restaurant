@@ -6,5 +6,6 @@ export const category = [
   { id: 5, name: "Fruits", urlParamname: "fruits" },
   { id: 6, name: "Icecream", urlParamname: "icecream" },
   { id: 7, name: "Soft Drinks", urlParamname: "drinks" },
+  { id: 8, name: "Fast Food", urlParamname: "fastfood" },
   // { id: 8, name: "Desert", urlParamname: "desert" },
 ];
