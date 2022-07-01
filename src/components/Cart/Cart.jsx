@@ -24,7 +24,6 @@ import CartRow from "./CartRow";
 const Cart = ({ toggleCart,dispatch,cart }) => {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  console.log("reder");
 
   const handleClearCart = () => {
     dispatch({ type: actionType.SET_CART, payload: [] });
