@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -36,7 +36,7 @@ const Header = () => {
   const provide = new GoogleAuthProvider();
   const [{ user: users, cart }, dispatch] = useStateValue();
   const navigate = useNavigate();
-  
+
   const handleMenuClick = (event) => {
     setMenuList(event.currentTarget);
   };
@@ -162,11 +162,11 @@ const Header = () => {
         </AppBar>
       </Box>
       <Drawer anchor={"right"} open={showCart} onClose={toggleCart(false)}>
-        <Cart toggleCart={toggleCart} />
+        <Cart toggleCart={toggleCart} dispatch={dispatch} cart={cart} />
       </Drawer>
       <Toolbar sx={{ mb: 1 }} />
     </>
   );
 };
 
-export default Header;
+export default memo(Header);

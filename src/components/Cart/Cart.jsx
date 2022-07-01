@@ -21,14 +21,37 @@ import { actionType } from "../../context/action";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import CartRow from "./CartRow";
 
-const Cart = ({ toggleCart }) => {
-  const [{ cart }, dispatch] = useStateValue();
+const Cart = ({ toggleCart,dispatch,cart }) => {
   const [loading, setLoading] = useState(false);
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   console.log("reder");
-  
+
   const handleClearCart = () => {
     dispatch({ type: actionType.SET_CART, payload: [] });
+  };
+
+  const addqty = (item) => () => {
+    dispatch({
+      type: actionType.SET_CART,
+      payload: cart.map((e) =>
+        e.id === item.id ? { ...e, qty: e.qty + 1 } : e
+      ),
+    });
+  };
+
+  const removeqty = (item) => () => {
+    if (item.qty == 1)
+      dispatch({
+        type: actionType.SET_CART,
+        payload: cart.filter((e) => e.id !== item.id),
+      });
+    else
+      dispatch({
+        type: actionType.SET_CART,
+        payload: cart.map((e) =>
+          e.id === item.id ? { ...e, qty: e.qty - 1 } : e
+        ),
+      });
   };
 
   return (
@@ -69,22 +92,29 @@ const Cart = ({ toggleCart }) => {
         </Button>
       </Box>
       <Divider />
-      <Box sx={{ width: "100%", flex: 1,px:1,overflowY:'auto' }}>
+      <Box sx={{ width: "100%", flex: 1, px: 1, overflowY: "auto" }}>
         {cart &&
           cart.length > 0 &&
-          cart.map((item) => <CartRow {...item} key={item.id} />)}
+          cart.map((item) => (
+            <CartRow
+              item={item}
+              key={item.id}
+              addqty={addqty}
+              removeqty={removeqty}
+            />
+          ))}
       </Box>
       <ClickAwayListener onClickAway={() => setExpanded(false)}>
         <Paper
           elevation={10}
-          sx={{ borderRadius: "20px 20px 0 0", overflow: "hidden",py:1 }}
+          sx={{ borderRadius: "20px 20px 0 0", overflow: "hidden", py: 1 }}
         >
           <Accordion
             elevation={0}
             TransitionProps={{ unmountOnExit: true }}
             expanded={expanded}
             disableGutters
-            sx={{bgcolor:'transparent'}}
+            sx={{ bgcolor: "transparent" }}
           >
             <AccordionSummary
               aria-controls="panel1a-content"
