@@ -66,7 +66,7 @@ const Header = () => {
   const logout = async () => {
     try {
       await signOut(firebaseAuth);
-      localStorage.clear();
+      localStorage.removeItem("user")
       dispatch({ type: actionType.SET_USER, payload: null });
       navigate("/");
       handleMenuClose();

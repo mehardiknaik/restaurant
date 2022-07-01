@@ -2,7 +2,7 @@ import { Box, colors, Typography, useTheme } from "@mui/material";
 import React from "react";
 
 // Import Swiper
-import { EffectCoverflow, Pagination } from "swiper";
+import { EffectCoverflow, Pagination, Keyboard } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -18,6 +18,7 @@ const Fresh = ({ urlParamname, name }) => {
   const data = items.filter(({ category }) => category === urlParamname);
   const theme = useTheme();
   console.log(theme);
+  
   return (
     <Box component="section">
       <Typography
@@ -45,7 +46,7 @@ const Fresh = ({ urlParamname, name }) => {
         effect={"coverflow"}
         grabCursor={true}
         centeredSlides={true}
-        modules={[EffectCoverflow, Pagination]}
+        modules={[EffectCoverflow, Pagination, Keyboard]}
         breakpoints={{
           0: {
             slidesPerView: 1.5,
@@ -73,10 +74,13 @@ const Fresh = ({ urlParamname, name }) => {
           modifier: 1,
           slideShadows: true,
         }}
+        keyboard={{
+          enabled: true,
+        }}
         // pagination={true}
       >
         {data.length > 0 &&
-          items.map((item, i) => (
+          data.map((item, i) => (
             <SwiperSlide key={i}>
               <SingleItem {...item} />
             </SwiperSlide>

@@ -24,13 +24,22 @@ const SingleItem = (props) => {
         borderRadius: 2,
         overflow: "visible",
         isolation: "isolate",
+        position:'relative',
+        ".image": {
+          transition:'0.3s',
+        },
+        "&:hover": {
+          ".image": {
+            transform:'scale(1.1)'
+          },
+        },
       }}
     >
       <Box
         component="img"
         sx={{
-          height: 100,
-          // width: "50%",
+          // height: 100,
+          width: "50%",
           objectFit: "contain",
           filter: "drop-shadow(0 0 0.75rem crimson)",
           position: "absolute",
@@ -38,6 +47,7 @@ const SingleItem = (props) => {
           zIndex: -1,
         }}
         src={props?.imageURL}
+        className="image"
         loading="lazy"
       />
       <Box

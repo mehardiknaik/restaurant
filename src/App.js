@@ -8,6 +8,7 @@ import { colors, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { firestore } from "./firebase.config";
 import { actionType } from "./context/action";
+import { AnimatePresence } from "framer-motion";
 
 const Home = lazy(() => import("./Pages/Home"));
 const Admin = lazy(() => import("./Pages/Admin"));
@@ -34,12 +35,15 @@ useEffect(()=>{
     <ThemeProvider theme={lightTheme}>
       <CssBaseline />
       <Header />
+      <AnimatePresence exitBeforeEnter>
+
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="admin" element={<Admin />} />
         </Routes>
       </Suspense>
+      </AnimatePresence>
       <ToastContainer hideProgressBar theme="colored" />
     </ThemeProvider>
   );

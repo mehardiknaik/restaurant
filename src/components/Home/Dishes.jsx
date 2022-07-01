@@ -1,12 +1,23 @@
 import { colors, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { category } from "../../data/data";
 import FastfoodRoundedIcon from "@mui/icons-material/FastfoodRounded";
+import { useStateValue } from "../../context/StateProvider";
+import SingleItem from "../Common/SingleItem";
 const Dishes = () => {
   const [dish, setDish] = useState("all");
+  const [categories, setCategories] = useState([
+    { id: 0, name: "All", urlParamname: "all" },
+  ]);
+  const [{ items }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    setCategories((prev) => [...prev, ...category]);
+  }, []);
+
   return (
-    <Box component="section">
+    <Box component="section" mb='20px'>
       <Typography
         variant="h5"
         component="div"
@@ -28,7 +39,7 @@ const Dishes = () => {
       >
         Our Hot Dishes
       </Typography>
-      <Box sx={{ overflowX: "auto", width: "100%", py: 2.5 }}>
+      <Box sx={{ overflowX: "auto", width: "100%", py: 2.5, px: 1.3 }}>
         <Box
           sx={{
             display: "flex",
@@ -39,51 +50,7 @@ const Dishes = () => {
             width: "100%",
           }}
         >
-          <Paper
-            elevation={9}
-            sx={{
-              color:
-                dish === "all" ? "secondary.contrastText" : "secondary.main",
-              bgcolor:
-                dish === "all" ? "secondary.main" : "secondary.contrastText",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-              height: 135,
-              minWidth: 100,
-              transition: "0.7s",
-              borderRadius: 2,
-              "&:hover": {
-                color: "secondary.contrastText",
-                bgcolor: "secondary.main",
-                ".MuiPaper-root": {
-                  color: "secondary.main",
-                  bgcolor: "secondary.contrastText",
-                },
-              },
-            }}
-            onClick={() => setDish("all")}
-          >
-            <Paper
-              elevation={0}
-              sx={{
-                p: 0.9,
-                display: "inline-flex",
-                borderRadius: "50%",
-                transition: "0.7s",
-
-                bgcolor:
-                  dish === "all" ? "secondary.contrastText" : "secondary.main",
-                color:
-                  dish === "all" ? "secondary.main" : "secondary.contrastText",
-              }}
-            >
-              <FastfoodRoundedIcon fontSize="small" />
-            </Paper>
-            <Typography variant="subtitle1">All</Typography>
-          </Paper>
-          {category.map((element) => (
+          {categories.map((element) => (
             <Paper
               elevation={9}
               key={element?.id}
@@ -138,6 +105,32 @@ const Dishes = () => {
             </Paper>
           ))}
         </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          columnGap: 2,
+          rowGap: 5,
+          justifyContent: "center",
+          mt: 5,
+        }}
+      >
+        {items.map((item) => (
+          <Box
+            key={item?.id}
+            sx={{
+              width: {
+                xs: "calc(50% - 18px)",
+                sm: "calc(33.33% - 18px)",
+                md: "calc(25% - 18px)",
+                lg: "calc(20% - 18px)",
+              },
+            }}
+          >
+            <SingleItem {...item} />
+          </Box>
+        ))}
       </Box>
     </Box>
   );
