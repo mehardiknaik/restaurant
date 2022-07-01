@@ -20,29 +20,28 @@ const App = () => {
     const q = query(collection(firestore, "foodItems"), orderBy("id", "desc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const items = querySnapshot.docs.map((doc) => doc.data());
-      dispatch({ type: actionType.SET_ITEMS, payload:items });
+      dispatch({ type: actionType.SET_ITEMS, payload: items });
     });
     return () => {
       unsubscribe();
     };
   }, []);
 
-useEffect(()=>{
-  localStorage.setItem("cart",JSON.stringify(cart))
-},[cart])
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Header />
       <AnimatePresence exitBeforeEnter>
-
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="admin" element={<Admin />} />
-        </Routes>
-      </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="admin" element={<Admin />} />
+          </Routes>
+        </Suspense>
       </AnimatePresence>
       <ToastContainer hideProgressBar theme="colored" />
     </ThemeProvider>

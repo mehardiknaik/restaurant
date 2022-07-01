@@ -1,13 +1,9 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  colors,
-  duration,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import delivery from "../../assets/img/delivery.png";
 import { motion } from "framer-motion";

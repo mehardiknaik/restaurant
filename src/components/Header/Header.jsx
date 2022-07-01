@@ -3,7 +3,11 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Avatar, Badge, Drawer, IconButton, Paper } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
 import Cart from "../Cart/Cart";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import Menu from "@mui/material/Menu";
@@ -30,9 +34,9 @@ const Header = () => {
   const open = Boolean(menuList);
   const firebaseAuth = getAuth(app);
   const provide = new GoogleAuthProvider();
-  const [{ user: users,cart }, dispatch] = useStateValue();
+  const [{ user: users, cart }, dispatch] = useStateValue();
   const navigate = useNavigate();
-
+  
   const handleMenuClick = (event) => {
     setMenuList(event.currentTarget);
   };
@@ -66,7 +70,7 @@ const Header = () => {
   const logout = async () => {
     try {
       await signOut(firebaseAuth);
-      localStorage.removeItem("user")
+      localStorage.removeItem("user");
       dispatch({ type: actionType.SET_USER, payload: null });
       navigate("/");
       handleMenuClose();

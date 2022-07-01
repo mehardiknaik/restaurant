@@ -1,4 +1,5 @@
-import { Box, colors, Typography, useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import React from "react";
 
 // Import Swiper
@@ -12,13 +13,15 @@ import "swiper/css/pagination";
 import { useStateValue } from "../../context/StateProvider";
 
 import SingleItem from "../Common/SingleItem";
+import {orange}  from "@mui/material/colors";
+import {useTheme} from "@mui/material/styles";
 
 const Fresh = ({ urlParamname, name }) => {
   const [{ items }, dispatch] = useStateValue();
   const data = items.filter(({ category }) => category === urlParamname);
   const theme = useTheme();
   console.log(theme);
-  
+
   return (
     <Box component="section">
       <Typography
@@ -34,7 +37,7 @@ const Fresh = ({ urlParamname, name }) => {
             position: "absolute",
             width: "40%",
             height: 3,
-            background: colors.orange[500],
+            background: orange[500],
             borderRadius: 19,
             bottom: -5,
           },

@@ -1,4 +1,7 @@
-import { Box, Card, IconButton, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import React from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useStateValue } from "../../context/StateProvider";
@@ -24,13 +27,13 @@ const SingleItem = (props) => {
         borderRadius: 2,
         overflow: "visible",
         isolation: "isolate",
-        position:'relative',
+        position: "relative",
         ".image": {
-          transition:'0.3s',
+          transition: "0.3s",
         },
         "&:hover": {
           ".image": {
-            transform:'scale(1.1)'
+            transform: "scale(1.1)",
           },
         },
       }}
@@ -54,8 +57,8 @@ const SingleItem = (props) => {
         sx={{
           textAlign: "right",
           pr: 1,
-          textShadow:
-            "2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff",
+          // textShadow:
+          //   "2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff",
         }}
       >
         <IconButton

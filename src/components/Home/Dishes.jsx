@@ -1,5 +1,5 @@
 import { colors, Paper, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import Box from "@mui/system/Box";
 import React, { useEffect, useState } from "react";
 import { category } from "../../data/data";
 import FastfoodRoundedIcon from "@mui/icons-material/FastfoodRounded";
@@ -17,7 +17,7 @@ const Dishes = () => {
   }, []);
 
   return (
-    <Box component="section" mb='20px'>
+    <Box component="section" mb="20px">
       <Typography
         variant="h5"
         component="div"

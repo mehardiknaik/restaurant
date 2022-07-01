@@ -14,8 +14,6 @@ const reducer = (state, action) => {
       return { ...state, items: action.payload };
     case actionType.SET_CART:
       return { ...state, cart: action.payload };
-    case actionType.CLEAR_CART:
-      return { ...state, cart: action.payload };
     default:
       return state;
   }
