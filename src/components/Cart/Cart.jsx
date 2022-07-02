@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
 import List from "@mui/material/List";
@@ -21,7 +21,7 @@ import { actionType } from "../../context/action";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import CartRow from "./CartRow";
 
-const Cart = ({ toggleCart,dispatch,cart }) => {
+const Cart = ({ toggleCart, dispatch, cart }) => {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -52,6 +52,16 @@ const Cart = ({ toggleCart,dispatch,cart }) => {
         ),
       });
   };
+
+  const Total = useMemo(() => {
+    if (cart.length > 0) {
+      const subTotal = cart.reduce((a, b) => {
+        return (a += b.qty * parseFloat(b.price));
+      }, 0);
+      return { subTotal, total: subTotal + 40 };
+    }
+    return { subTotal: 50, total: 90 };
+  }, [cart]);
 
   return (
     <Box
@@ -103,7 +113,7 @@ const Cart = ({ toggleCart,dispatch,cart }) => {
             />
           ))}
       </Box>
-      <ClickAwayListener onClickAway={() => setExpanded(false)}>
+      {/* <ClickAwayListener onClickAway={() => setExpanded(false)}> */}
         <Paper
           elevation={10}
           sx={{ borderRadius: "20px 20px 0 0", overflow: "hidden", py: 1 }}
@@ -121,11 +131,29 @@ const Cart = ({ toggleCart,dispatch,cart }) => {
               sx={{ display: "none" }}
             ></AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
+              <Box
+                display="flex"
+                p={1}
+                justifyContent="space-between"
+                color="text.secondary"
+              >
+                <Typography>Sub Total</Typography>
+                <Typography>₹&nbsp;{Total.subTotal}</Typography>
+              </Box>
+              <Box
+                display="flex"
+                p={1}
+                justifyContent="space-between"
+                color="text.secondary"
+              >
+                <Typography>Shipping</Typography>
+                <Typography>₹&nbsp;40</Typography>
+              </Box>
+              <Divider />
+              <Box display="flex" p={1} justifyContent="space-between">
+                <Typography variant="h6">Total</Typography>
+                <Typography variant="h6">₹&nbsp;{Total.total}</Typography>
+              </Box>
             </AccordionDetails>
           </Accordion>
           <Box
@@ -137,9 +165,9 @@ const Cart = ({ toggleCart,dispatch,cart }) => {
           >
             <Button
               // size="large"
-              color="secondary"
+
               onClick={() => setExpanded(!expanded)}
-              sx={{ fontSize: 19, fontWeight: 600 }}
+              sx={{ fontSize: 19, fontWeight: 600, color: "text.primary" }}
               endIcon={
                 <ExpandLessIcon
                   sx={{
@@ -149,7 +177,7 @@ const Cart = ({ toggleCart,dispatch,cart }) => {
                 />
               }
             >
-              450
+              ₹&nbsp;{Total.total}
             </Button>
             <LoadingButton
               size="large"
@@ -165,7 +193,7 @@ const Cart = ({ toggleCart,dispatch,cart }) => {
             </LoadingButton>
           </Box>
         </Paper>
-      </ClickAwayListener>
+      {/* </ClickAwayListener> */}
     </Box>
   );
 };
