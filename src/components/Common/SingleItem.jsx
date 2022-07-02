@@ -2,23 +2,15 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import React from "react";
+import React, { memo } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/action";
 
-const SingleItem = (props) => {
-  const [{ cart }, dispatch] = useStateValue();
+const SingleItem = ({ item, dispatch }) => {
+  console.log("SingleItem", item);
 
-  const addToCart = (item) => {
-    const present = cart.find((e) => e.id === item.id);
-    let newcart = [...cart, item];
-    if (present) {
-      newcart = cart.map((e) =>
-        e.id === item.id ? { ...e, qty: e.qty + 1 } : e
-      );
-    }
-    dispatch({ type: actionType.SET_CART, payload: newcart });
+  const addToCart = () => {
+    dispatch({ type: actionType.SET_CART, payload: item });
   };
   return (
     <Card
@@ -49,7 +41,7 @@ const SingleItem = (props) => {
           top: -35,
           zIndex: -1,
         }}
-        src={props?.imageURL}
+        src={item?.imageURL}
         className="image"
         loading="lazy"
       />
@@ -66,21 +58,21 @@ const SingleItem = (props) => {
           color="secondary"
           variant="contained"
           sx={{ p: 0.25 }}
-          onClick={() => addToCart(props)}
+          onClick={addToCart}
         >
           <ShoppingCartIcon />
         </IconButton>
-        <Typography variant="h6">{props?.title}</Typography>
-        <Typography variant="caption">{props?.calories} Calories</Typography>
+        <Typography variant="h6">{item?.title}</Typography>
+        <Typography variant="caption">{item?.calories} Calories</Typography>
         <Typography variant="subtitle1" component="div">
           <Typography variant="caption" component="span" color="secondary">
             ₹&nbsp;
           </Typography>
-          {props?.price}
+          {item?.price}
         </Typography>
       </Box>
     </Card>
   );
 };
 
-export default SingleItem;
+export default memo(SingleItem);

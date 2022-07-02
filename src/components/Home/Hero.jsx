@@ -12,7 +12,7 @@ import { useStateValue } from "../../context/StateProvider";
 import { useTheme } from "@emotion/react";
 
 const Hero = () => {
-  const [{ items }, dispatch] = useStateValue();
+  const { items } = useStateValue();
   const theme = useTheme();
   return (
     <Grid
@@ -105,7 +105,7 @@ const Hero = () => {
               <Card
                 component={motion.div}
                 whileTap={{ scale: 0.9, transition: { duration: 0.1 } }}
-                key={item.id}
+                key={i}
                 bgcolor="primary.main"
                 sx={{
                   bgcolor: "#ffffff4d",

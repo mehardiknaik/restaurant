@@ -1,10 +1,16 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import { useStateValue } from "./context/StateProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { colors, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  colors,
+  createTheme,
+  CssBaseline,
+  Switch,
+  ThemeProvider,
+} from "@mui/material";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { firestore } from "./firebase.config";
 import { actionType } from "./context/action";
@@ -14,8 +20,9 @@ const Home = lazy(() => import("./Pages/Home"));
 const Admin = lazy(() => import("./Pages/Admin"));
 
 const App = () => {
-  const [{ cart }, dispatch] = useStateValue();
-
+  const { dispatch } = useStateValue();
+  const [themeSwitch, setThemeSwitch] = useState(true);
+  console.log("App");
   useEffect(() => {
     const q = query(collection(firestore, "foodItems"), orderBy("id", "desc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -27,12 +34,8 @@ const App = () => {
     };
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={themeSwitch ? lightTheme : darkTheme}>
       <CssBaseline />
       <Header />
       <AnimatePresence exitBeforeEnter>
@@ -44,6 +47,10 @@ const App = () => {
         </Suspense>
       </AnimatePresence>
       <ToastContainer hideProgressBar theme="colored" />
+      <Switch
+        onChange={(e) => setThemeSwitch(e.target.checked)}
+        defaultChecked={themeSwitch}
+      />
     </ThemeProvider>
   );
 };

@@ -5,17 +5,14 @@ import { category } from "../../data/data";
 import FastfoodRoundedIcon from "@mui/icons-material/FastfoodRounded";
 import { useStateValue } from "../../context/StateProvider";
 import SingleItem from "../Common/SingleItem";
+
 const Dishes = () => {
   const [dish, setDish] = useState("all");
-  const [categories, setCategories] = useState([
-    { id: 0, name: "All", urlParamname: "all" },
+  const [categories] = useState([
+    { id: 0, name: "All", urlParamname: "all" },...category
   ]);
-  const [{ items }, dispatch] = useStateValue();
-
-  useEffect(() => {
-    setCategories((prev) => [...prev, ...category]);
-  }, []);
-
+  const { items, dispatch } = useStateValue();
+  console.log("Dishes");
   return (
     <Box component="section" mb="20px">
       <Typography
@@ -128,7 +125,7 @@ const Dishes = () => {
               },
             }}
           >
-            <SingleItem {...item} />
+            <SingleItem item={item} dispatch={dispatch} />
           </Box>
         ))}
       </Box>

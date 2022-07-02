@@ -20,39 +20,13 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { actionType } from "../../context/action";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import CartRow from "./CartRow";
+import emptyCart from "../../assets/img/emptyCart.svg";
+import EmptyCart from "../../svg/EmptyCart";
 
 const Cart = ({ toggleCart, dispatch, cart }) => {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
-
-  const handleClearCart = () => {
-    dispatch({ type: actionType.SET_CART, payload: [] });
-  };
-
-  const addqty = (item) => () => {
-    dispatch({
-      type: actionType.SET_CART,
-      payload: cart.map((e) =>
-        e.id === item.id ? { ...e, qty: e.qty + 1 } : e
-      ),
-    });
-  };
-
-  const removeqty = (item) => () => {
-    if (item.qty == 1)
-      dispatch({
-        type: actionType.SET_CART,
-        payload: cart.filter((e) => e.id !== item.id),
-      });
-    else
-      dispatch({
-        type: actionType.SET_CART,
-        payload: cart.map((e) =>
-          e.id === item.id ? { ...e, qty: e.qty - 1 } : e
-        ),
-      });
-  };
-
+  console.log("cart");
   const Total = useMemo(() => {
     if (cart.length > 0) {
       const subTotal = cart.reduce((a, b) => {
@@ -60,8 +34,12 @@ const Cart = ({ toggleCart, dispatch, cart }) => {
       }, 0);
       return { subTotal, total: subTotal + 40 };
     }
-    return { subTotal: 50, total: 90 };
+    return { subTotal: 0, total: 0 };
   }, [cart]);
+
+  const clearCart = () => {
+    dispatch({ type: actionType.CLEAR_CART, payload: [] });
+  };
 
   return (
     <Box
@@ -74,12 +52,7 @@ const Cart = ({ toggleCart, dispatch, cart }) => {
       role="presentation"
       onKeyDown={toggleCart(false)}
     >
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        p={1}
-      >
+      <Box display="flex" alignItems="center" p={1}>
         <IconButton
           aria-label="cart"
           color="primary"
@@ -89,111 +62,108 @@ const Cart = ({ toggleCart, dispatch, cart }) => {
           {" "}
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h6" component="div">
+        <Typography variant="h6" component="div" flex={1} textAlign={"center"}>
           Cart
         </Typography>
-        <Button
-          variant="text"
-          onClick={handleClearCart}
-          endIcon={<CloseIcon />}
-        >
-          Clear
-        </Button>
+        {cart.length > 0 && (
+          <Button variant="text" onClick={clearCart} endIcon={<CloseIcon />}>
+            Clear
+          </Button>
+        )}
       </Box>
       <Divider />
-      <Box sx={{ width: "100%", flex: 1, px: 1, overflowY: "auto" }}>
-        {cart &&
-          cart.length > 0 &&
-          cart.map((item) => (
-            <CartRow
-              item={item}
-              key={item.id}
-              addqty={addqty}
-              removeqty={removeqty}
-            />
-          ))}
-      </Box>
-      {/* <ClickAwayListener onClickAway={() => setExpanded(false)}> */}
-        <Paper
-          elevation={10}
-          sx={{ borderRadius: "20px 20px 0 0", overflow: "hidden", py: 1 }}
-        >
-          <Accordion
-            elevation={0}
-            TransitionProps={{ unmountOnExit: true }}
-            expanded={expanded}
-            disableGutters
-            sx={{ bgcolor: "transparent" }}
-          >
-            <AccordionSummary
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-              sx={{ display: "none" }}
-            ></AccordionSummary>
-            <AccordionDetails>
-              <Box
-                display="flex"
-                p={1}
-                justifyContent="space-between"
-                color="text.secondary"
-              >
-                <Typography>Sub Total</Typography>
-                <Typography>₹&nbsp;{Total.subTotal}</Typography>
-              </Box>
-              <Box
-                display="flex"
-                p={1}
-                justifyContent="space-between"
-                color="text.secondary"
-              >
-                <Typography>Shipping</Typography>
-                <Typography>₹&nbsp;40</Typography>
-              </Box>
-              <Divider />
-              <Box display="flex" p={1} justifyContent="space-between">
-                <Typography variant="h6">Total</Typography>
-                <Typography variant="h6">₹&nbsp;{Total.total}</Typography>
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            pr={0.5}
-            pl={1}
-          >
-            <Button
-              // size="large"
-
-              onClick={() => setExpanded(!expanded)}
-              sx={{ fontSize: 19, fontWeight: 600, color: "text.primary" }}
-              endIcon={
-                <ExpandLessIcon
-                  sx={{
-                    transform: `rotate(${expanded ? 180 : 0}deg)`,
-                    transition: "0.2s",
-                  }}
-                />
-              }
-            >
-              ₹&nbsp;{Total.total}
-            </Button>
-            <LoadingButton
-              size="large"
-              disableElevation
-              onClick={() => console.log("place")}
-              endIcon={<SendIcon />}
-              loading={loading}
-              loadingPosition="end"
-              variant="contained"
-              sx={{ m: 1 }}
-            >
-              Place Order
-            </LoadingButton>
+      {cart.length > 0 ? (
+        <>
+          <Box sx={{ width: "100%", flex: 1, px: 1, overflowY: "auto" }}>
+            {cart.map((item) => (
+              <CartRow item={item} key={item.id} />
+            ))}
           </Box>
-        </Paper>
-      {/* </ClickAwayListener> */}
+          <Paper
+            elevation={10}
+            sx={{ borderRadius: "20px 20px 0 0", overflow: "hidden", py: 1 }}
+          >
+            <Accordion
+              elevation={0}
+              TransitionProps={{ unmountOnExit: true }}
+              expanded={expanded}
+              disableGutters
+              sx={{ bgcolor: "transparent" }}
+            >
+              <AccordionSummary
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                sx={{ display: "none" }}
+              ></AccordionSummary>
+              <AccordionDetails>
+                <Box
+                  display="flex"
+                  p={1}
+                  justifyContent="space-between"
+                  color="text.secondary"
+                >
+                  <Typography>Sub Total</Typography>
+                  <Typography>₹&nbsp;{Total.subTotal}</Typography>
+                </Box>
+                <Box
+                  display="flex"
+                  p={1}
+                  justifyContent="space-between"
+                  color="text.secondary"
+                >
+                  <Typography>Shipping</Typography>
+                  <Typography>₹&nbsp;40</Typography>
+                </Box>
+                <Divider />
+                <Box display="flex" p={1} justifyContent="space-between">
+                  <Typography variant="h6">Total</Typography>
+                  <Typography variant="h6">₹&nbsp;{Total.total}</Typography>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              pr={0.5}
+              pl={1}
+            >
+              <Button
+                // size="large"
+
+                onClick={() => setExpanded(!expanded)}
+                sx={{ fontSize: 19, fontWeight: 600, color: "text.primary" }}
+                endIcon={
+                  <ExpandLessIcon
+                    sx={{
+                      transform: `rotate(${expanded ? 180 : 0}deg)`,
+                      transition: "0.2s",
+                    }}
+                  />
+                }
+              >
+                ₹&nbsp;{Total.total}
+              </Button>
+              <LoadingButton
+                size="large"
+                disableElevation
+                onClick={() => console.log("place")}
+                endIcon={<SendIcon />}
+                loading={loading}
+                loadingPosition="end"
+                variant="contained"
+                sx={{ m: 1 }}
+              >
+                Place Order
+              </LoadingButton>
+            </Box>
+          </Paper>
+        </>
+      ) : (
+        <Box display="flex" flex={1}>
+          <EmptyCart />
+        </Box>
+      )}
     </Box>
   );
 };

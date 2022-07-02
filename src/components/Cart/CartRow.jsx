@@ -8,7 +8,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const CartRow = ({ addqty, item, removeqty }) => {
+const CartRow = ({  item }) => {
   return (
     <Paper sx={{ my: 1 }}>
       <ListItem
@@ -17,7 +17,7 @@ const CartRow = ({ addqty, item, removeqty }) => {
             <IconButton
               aria-label="RemoveIcon"
               color="primary"
-              onClick={removeqty(item)}
+              // onClick={removeqty(item)}
             >
               {item?.qty < 2 ? (
                 <DeleteIcon fontSize="small" />
@@ -29,7 +29,7 @@ const CartRow = ({ addqty, item, removeqty }) => {
             <IconButton
               aria-label="AddIcon"
               color="primary"
-              onClick={addqty(item)}
+              // onClick={addqty(item)}
             >
               <AddIcon fontSize="small" />
             </IconButton>

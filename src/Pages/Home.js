@@ -7,7 +7,7 @@ import { category } from "../data/data";
 import Dishes from "../components/Home/Dishes";
 
 const Home = () => {
-
+  console.log("Home");
   useEffect(() => {
     const analytics = getAnalytics();
     logEvent(analytics, "screen_view", {

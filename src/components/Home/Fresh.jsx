@@ -13,11 +13,11 @@ import "swiper/css/pagination";
 import { useStateValue } from "../../context/StateProvider";
 
 import SingleItem from "../Common/SingleItem";
-import {orange}  from "@mui/material/colors";
-import {useTheme} from "@mui/material/styles";
+import { orange } from "@mui/material/colors";
+import { useTheme } from "@mui/material/styles";
 
 const Fresh = ({ urlParamname, name }) => {
-  const [{ items }, dispatch] = useStateValue();
+  const { items, dispatch } = useStateValue();
   const data = items.filter(({ category }) => category === urlParamname);
   const theme = useTheme();
   console.log(theme);
@@ -85,7 +85,7 @@ const Fresh = ({ urlParamname, name }) => {
         {data.length > 0 &&
           data.map((item, i) => (
             <SwiperSlide key={i}>
-              <SingleItem {...item} />
+              <SingleItem item={item}  dispatch={dispatch} />
             </SwiperSlide>
           ))}
       </Swiper>

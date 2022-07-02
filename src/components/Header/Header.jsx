@@ -34,7 +34,7 @@ const Header = () => {
   const open = Boolean(menuList);
   const firebaseAuth = getAuth(app);
   const provide = new GoogleAuthProvider();
-  const [{ user: users, cart }, dispatch] = useStateValue();
+  const { user: users,cart, dispatch } = useStateValue();
   const navigate = useNavigate();
 
   const handleMenuClick = (event) => {
