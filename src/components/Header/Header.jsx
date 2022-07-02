@@ -24,7 +24,7 @@ import {
 import { app } from "../../firebase.config";
 import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/action";
-import logo from "../../assets/img/logo.png";
+import logo from "../../assets/img/logo.webp";
 import avatar from "../../assets/img/avatar.png";
 import { toast } from "react-toastify";
 

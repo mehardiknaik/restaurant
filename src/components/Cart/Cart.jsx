@@ -160,8 +160,22 @@ const Cart = ({ toggleCart, dispatch, cart }) => {
           </Paper>
         </>
       ) : (
-        <Box display="flex" flex={1}>
+        <Box
+          display="flex"
+          px={2}
+          flex={1}
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          gap={1.5}
+        >
           <EmptyCart />
+          <Typography
+            variant="h6"
+            component="div"
+          >
+            Your cart is Empty
+          </Typography>
         </Box>
       )}
     </Box>

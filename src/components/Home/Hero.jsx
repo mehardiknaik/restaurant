@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import delivery from "../../assets/img/delivery.png";
 import { motion } from "framer-motion";
-import heroBg from "../../assets/img/heroBg.png";
+import heroBg from "../../assets/img/heroBg.webp";
 import { useStateValue } from "../../context/StateProvider";
 import { useTheme } from "@emotion/react";
 
