@@ -10,8 +10,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case actionType.SET_USER:
       return { ...state, user: action.payload };
+
     case actionType.SET_ITEMS:
       return { ...state, items: action.payload };
+
     case actionType.SET_CART:
       const inCart = state.cart.find((e) => e.id === action.payload.id);
       if (inCart) {
@@ -25,6 +27,7 @@ const reducer = (state, action) => {
         };
       }
       return { ...state, cart: [...state.cart, action.payload] };
+
     case actionType.CART_QTY_INC:
       return {
         ...state,
@@ -32,6 +35,7 @@ const reducer = (state, action) => {
           e.id === action.payload.id ? { ...e, qty: e.qty + 1 } : e
         ),
       };
+
     case actionType.CART_QTY_DEC:
       if (action.payload.qty < 2)
         return {
@@ -44,6 +48,7 @@ const reducer = (state, action) => {
           e.id === action.payload.id ? { ...e, qty: e.qty - 1 } : e
         ),
       };
+      
     case actionType.CLEAR_CART:
       return { ...state, cart: action.payload };
     default:
