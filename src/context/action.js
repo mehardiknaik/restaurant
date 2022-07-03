@@ -2,5 +2,7 @@ export const actionType = {
   SET_USER: "SET_USER",
   SET_ITEMS: "SET_ITEMS",
   SET_CART: "SET_CART",
+  CART_QTY_INC: "CART_QTY_INC",
+  CART_QTY_DEC: "CART_QTY_DEC",
   CLEAR_CART: "CLEAR_CART",
 };

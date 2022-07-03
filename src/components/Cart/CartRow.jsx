@@ -1,14 +1,24 @@
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import React from "react";
+import React, { memo } from "react";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import { IconButton, ListItemText } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { actionType } from "../../context/action";
 
-const CartRow = ({  item }) => {
+const CartRow = ({ item, dispatch }) => {
+
+  const increaseQty = (item) => () => {
+    dispatch({ type: actionType.CART_QTY_INC, payload: item });
+  };
+
+  const decreaseQty = (item) => () => {
+    dispatch({ type: actionType.CART_QTY_DEC, payload: item });
+  };
+  
   return (
     <Paper sx={{ my: 1 }}>
       <ListItem
@@ -17,7 +27,7 @@ const CartRow = ({  item }) => {
             <IconButton
               aria-label="RemoveIcon"
               color="primary"
-              // onClick={removeqty(item)}
+              onClick={decreaseQty(item)}
             >
               {item?.qty < 2 ? (
                 <DeleteIcon fontSize="small" />
@@ -29,7 +39,7 @@ const CartRow = ({  item }) => {
             <IconButton
               aria-label="AddIcon"
               color="primary"
-              // onClick={addqty(item)}
+              onClick={increaseQty(item)}
             >
               <AddIcon fontSize="small" />
             </IconButton>
@@ -45,4 +55,4 @@ const CartRow = ({  item }) => {
   );
 };
 
-export default CartRow;
+export default memo(CartRow);

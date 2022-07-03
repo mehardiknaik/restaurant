@@ -22,7 +22,7 @@ const Admin = lazy(() => import("./Pages/Admin"));
 const App = () => {
   const { dispatch } = useStateValue();
   const [themeSwitch, setThemeSwitch] = useState(true);
-  console.log("App");
+
   useEffect(() => {
     const q = query(collection(firestore, "foodItems"), orderBy("id", "desc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {

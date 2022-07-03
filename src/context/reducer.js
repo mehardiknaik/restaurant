@@ -25,6 +25,25 @@ const reducer = (state, action) => {
         };
       }
       return { ...state, cart: [...state.cart, action.payload] };
+    case actionType.CART_QTY_INC:
+      return {
+        ...state,
+        cart: state.cart.map((e) =>
+          e.id === action.payload.id ? { ...e, qty: e.qty + 1 } : e
+        ),
+      };
+    case actionType.CART_QTY_DEC:
+      if (action.payload.qty < 2)
+        return {
+          ...state,
+          cart: state.cart.filter((e) => e.id !== action.payload.id),
+        };
+      return {
+        ...state,
+        cart: state.cart.map((e) =>
+          e.id === action.payload.id ? { ...e, qty: e.qty - 1 } : e
+        ),
+      };
     case actionType.CLEAR_CART:
       return { ...state, cart: action.payload };
     default:

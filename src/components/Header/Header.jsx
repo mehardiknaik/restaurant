@@ -161,7 +161,7 @@ const Header = () => {
           </Toolbar>
         </AppBar>
       </Box>
-      <Drawer anchor={"right"} open={showCart} onClose={toggleCart(false)}>
+      <Drawer hideBackdrop transitionDuration={150} anchor={"right"} open={showCart} onClose={toggleCart(false)}>
         <Cart toggleCart={toggleCart} dispatch={dispatch} cart={cart} />
       </Drawer>
       <Toolbar sx={{ mb: 1 }} />

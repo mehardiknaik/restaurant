@@ -7,7 +7,6 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { actionType } from "../../context/action";
 
 const SingleItem = ({ item, dispatch }) => {
-  console.log("SingleItem", item);
 
   const addToCart = () => {
     dispatch({ type: actionType.SET_CART, payload: item });

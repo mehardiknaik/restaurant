@@ -26,7 +26,6 @@ import EmptyCart from "../../svg/EmptyCart";
 const Cart = ({ toggleCart, dispatch, cart }) => {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  console.log("cart");
   const Total = useMemo(() => {
     if (cart.length > 0) {
       const subTotal = cart.reduce((a, b) => {
@@ -76,7 +75,7 @@ const Cart = ({ toggleCart, dispatch, cart }) => {
         <>
           <Box sx={{ width: "100%", flex: 1, px: 1, overflowY: "auto" }}>
             {cart.map((item) => (
-              <CartRow item={item} key={item.id} />
+              <CartRow item={item} key={item.id} dispatch={dispatch} />
             ))}
           </Box>
           <Paper
@@ -170,10 +169,7 @@ const Cart = ({ toggleCart, dispatch, cart }) => {
           gap={1.5}
         >
           <EmptyCart />
-          <Typography
-            variant="h6"
-            component="div"
-          >
+          <Typography variant="h6" component="div">
             Your cart is Empty
           </Typography>
         </Box>

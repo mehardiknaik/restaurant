@@ -12,7 +12,7 @@ const Dishes = () => {
     { id: 0, name: "All", urlParamname: "all" },...category
   ]);
   const { items, dispatch } = useStateValue();
-  console.log("Dishes");
+
   return (
     <Box component="section" mb="20px">
       <Typography
